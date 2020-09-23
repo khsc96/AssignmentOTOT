@@ -1,0 +1,19 @@
+{
+  "name": "assignb",
+  "version": "1.0.0",
+  "description": "An app demostrating simple RESTful API implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api",
+    "restful",
+    "json"
+  ],
+  "author": "Kenny Ho",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
