@@ -25,7 +25,7 @@ Steps to follow:
 
 3. Open another terminal, run `$mongod`. Make sure terminal is able to detect mongoDB, check by doing `$mongo --version`
 
-4. In the same directory run `$nodemon index`
+4. In the project root directory run `$nodemon index`
 
 5. Open browser go to http://localhost:8080/api/contacts. If set-up was successful, page will display `status: "success" message:" Contacts retrieved successfully data: []`
 
@@ -45,5 +45,5 @@ In Postman:
     * For `UPDATE`, select `Patch`/`Put` on the dropdown bar, fill up `Body` tab with key-value pair, then press send.
 
 ## Acknowledgement
-Followed through this tutorial provided in assignment pdf.
-https://medium.com/@dinyangetoh/how-to-build-simple-restful-api-with-nodejs-expressjs-and-mongodb-99348012925d
+Followed through this [tutorial](https://medium.com/@dinyangetoh/how-to-build-simple-restful-api-with-nodejs-expressjs-and-mongodb-99348012925d
+) provided in assignment pdf.
