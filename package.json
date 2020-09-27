@@ -4,7 +4,8 @@
   "description": "An app demostrating simple RESTful API implementation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index",
+    "test": "mocha tests/*.js --exit"
   },
   "keywords": [
     "api",
@@ -19,6 +20,7 @@
     "mongoose": "^5.10.6"
   },
   "devDependencies": {
+    "chai-http": "^4.3.0",
     "chai": "^4.2.0",
     "mocha": "^8.1.3"
   }
