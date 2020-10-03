@@ -3,6 +3,7 @@ let express = require('express')
 let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
 let app = express()
+let contactController = require('./contactController')
 
 // Import routes
 let apiRoutes = require('./api-routes')
@@ -43,3 +44,5 @@ app.use('/api', apiRoutes)
 app.listen(port, () => {
     console.log("Running assignB on port " + port)
 })
+
+module.exports = app// For testubg
