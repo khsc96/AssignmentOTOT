@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+    - lts/*
+
+install:
+    - echo '---Installing Dependencies---'
+    - npm install
+
+script:
+    - echo 'Running Tests...'
+    - npm run test
+
+# Allowing travis to cache node_modules directory so it does not need to install full package everytime.
+cache: npm
+
