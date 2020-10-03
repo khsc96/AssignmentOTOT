@@ -48,7 +48,7 @@ In Postman:
 Followed through this [tutorial](https://medium.com/@dinyangetoh/how-to-build-simple-restful-api-with-nodejs-expressjs-and-mongodb-99348012925d
 ) provided in assignment pdf.
 
-## 2. Running tests locally and via Travis
+## 2. Running tests locally and via Travis (B2)
 
 ### Requirements:
 - mocha 
