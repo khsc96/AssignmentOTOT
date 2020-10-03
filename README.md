@@ -53,7 +53,7 @@ Followed through this [tutorial](https://medium.com/@dinyangetoh/how-to-build-si
 ### Requirements:
 - mocha 
 - chai
-- fork repo & download locally this whole code-based
+- fork repo & download locally this whole code
 
 ### Steps to run test locally:
 
