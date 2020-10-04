@@ -119,4 +119,4 @@ describe("Testing of API", () => {
         })
 
     });
-})
+}).timeout(10000);
