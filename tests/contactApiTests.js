@@ -17,15 +17,13 @@ let testContact = {
     phone: "88855532"
 }
 
+// Extend timeout time for travis
+mocha.timeout(5000)
+
 // TODO test cases here
 describe("Testing of API", () => {
     let contactsPosted = {};
-    // after((done) => {
-    //     // Before each test, empty database
-    //     contactModel.remove({}, (err) => {
-    //         done();
-    //     });
-    // });
+
     describe("POST API", () => {
         it("it should POST a contact", (done) => {
             chai.request(app)
