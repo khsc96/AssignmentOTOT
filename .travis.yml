@@ -5,22 +5,17 @@ node_js:
 services: mongodb
 # Allowing travis to cache node_modules directory so it does not need to install full package everytime.
 cache: npm
-jobs:
-    include:
-        - stage: test
-        install:
-            - npm install
-        script:
-            - npm run test
-        # - stage: deploy
-        # before_script:
-        #     - npm install -g serverless
-        #     - serverless config credentials --provider aws --key --secret
-        # script:
-        #     - npm install
-        #     - sls deploy
-        # skip_cleanup: true
-        # on:
-        #     branch: main
 
+install:
+    - npm install
+    - npm install -g serverless
+before_script:
+    - serverless config credentials --provider aws --key $access_key --secret $AWSSECRET
+script:
+    - npm run test
+after_success:
+    - sls deploy
+env:
+    global:
+        - secure: pLYnvzEKRUb5o1zlJvtGM+u/4171P5PV50Tb8iD/Pxle6hGj6Cgr3BnfNcQlyQfV5qX3pL7CNWvP2rEic2bSNcK2lTzvPl8IpAIY2aO/ULbtx4CIghzNTLmLSr3NTZ4fdLUxUmXqI9mOPZmJUTIXuNkY8xj+7r3vTjmfOkXJW4HlFLT332WbskfmtUluZ/VW2rYmtVEVruiMXdMcewUmxRMeMi4NY9bs9CumtUXUyI8tyTJIuP9FInThHRKNOOY/Xy+3pWIBXtdpk+M1rHe8CDUVIFqDgxpZCKXeJimEJ+p0PcrMtu9NnYNGhah2PHD7rjxNJjbyAX6eK2+XJ72QTNiZi+dtsVd8gHtX6Gqp/isaexxHGh0OezXCyRZjtt54TUms077NwORDaAfqzYDwWxhl1j0tEacL9GR+3xWtvwGt2Ofkp/7K6T0jU2yJ9RCM7Qu5LxdEF4VDn5F6g5vFPbjqAFIkKG/LDMQeoE3GuKvSpasLS2EKsQSWHjTiwDG1DGA1bTtWnfURsKWbHwur0UWc5rsDbHRWxs7zcjOVQxl5OvFIMjnfyCijygrldWV3uIwvof/lo7gUA8XkvFM8st8m+0P69xqnK29zaWhuVQcgY26E22IM1MY2hEwIbXfwEBDAUgMGcRqUr1Mc/uKgZVUkrjbPSEAvI3tVfhNXS2M=
 
