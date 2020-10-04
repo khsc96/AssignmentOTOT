@@ -81,3 +81,32 @@ Travis tutorial and set-up:
 1. [Travis customising build](https://docs.travis-ci.com/user/customizing-the-build/)
 1. [Possible node_js version in yml file](https://medium.com/@nodejs/choosing-the-node-js-versions-for-your-ci-tests-hint-use-lts-89b67f68d7ca)
 1. [Building a JavaScript and Node.js project with travis](https://docs.travis-ci.com/user/languages/javascript-with-nodejs/)
+
+
+## 3. B3 Use CD tool for automated deployment to a serverless service.
+
+### How to access/use webpage deployed to a serverless service (AWS lambda):
+1. Access it by using:
+
+    i. https://ly2xlzpho6.execute-api.ap-southeast-1.amazonaws.com/dev OR
+
+    ii. https://ly2xlzpho6.execute-api.ap-southeast-1.amazonaws.com/dev/api/contacts
+
+2. To add any contacts or perform POST/GET/UPDATE/DELETE API you should use PostMan and:
+
+    i. Follow through B1 steps but replace all link of `http://localhost:8080/api/contact` to `https://ly2xlzpho6.execute-api.ap-southeast-1.amazonaws.com/dev/api/contacts`
+
+## Acknowledgement - For B3
+
+Serverless set-up:
+1. https://www.serverless.com/framework/docs/providers/aws/guide/credentials/
+1. https://www.serverless.com/blog/serverless-express-rest-api
+1. https://www.serverless.com/framework/docs/providers/aws/guide/quick-start/
+
+Travis encryption/set-ups:
+1. https://docs.travis-ci.com/user/encryption-keys#usage
+1. https://blog.travis-ci.com/2019-05-30-setting-up-a-ci-cd-process-on-github
+
+MongoDB set-up:
+1. https://dev.to/adnanrahic/a-crash-course-on-serverless-apis-with-express-and-mongodb-193k
+1. https://medium.com/@sergio13prez/connecting-to-mongodb-atlas-d1381f184369
