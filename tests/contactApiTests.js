@@ -1,6 +1,6 @@
+let app = require('../index');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../index');
 let should = chai.should();
 
 let contactModel = require('../contactModel');
@@ -17,15 +17,12 @@ let testContact = {
     phone: "88855532"
 }
 
+// Extend timeout time for travis
+
 // TODO test cases here
 describe("Testing of API", () => {
     let contactsPosted = {};
-    after((done) => {
-        // Before each test, empty database
-        contactModel.remove({}, (err) => {
-            done();
-        });
-    });
+
     describe("POST API", () => {
         it("it should POST a contact", (done) => {
             chai.request(app)
@@ -46,7 +43,7 @@ describe("Testing of API", () => {
                     contactsPosted = res.body.data;
                     done();
                 });
-        });
+        }).timeout(5000);
     });
 
     describe("GET API", () => {
@@ -106,7 +103,7 @@ describe("Testing of API", () => {
                 })
         })
 
-    });
+    }).timeout(5000);
     describe("DELTE API", () => {
         it('it should delete existing contact with id', (done) => {
             const contactID = contactsPosted._id;
@@ -122,4 +119,4 @@ describe("Testing of API", () => {
         })
 
     });
-})
+});

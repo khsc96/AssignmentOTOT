@@ -4,6 +4,7 @@ let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
 let app = express()
 let contactController = require('./contactController')
+let serverless = require('serverless-http')
 
 // Import routes
 let apiRoutes = require('./api-routes')
@@ -15,8 +16,10 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
+const mongoDbUrl = "mongodb+srv://iamdbuser:admin@cluster0.ch7fg.mongodb.net/CS3219-assignB?retryWrites=true&w=majority"
+
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/assignB', 
+mongoose.connect(mongoDbUrl, 
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -46,3 +49,4 @@ app.listen(port, () => {
 })
 
 module.exports = app// For testubg
+module.exports.handler = serverless(app) // For serverless
