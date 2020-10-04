@@ -1,6 +1,6 @@
+let app = require('../index');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../index');
 let should = chai.should();
 
 let contactModel = require('../contactModel');
@@ -18,7 +18,6 @@ let testContact = {
 }
 
 // Extend timeout time for travis
-mocha.timeout(5000)
 
 // TODO test cases here
 describe("Testing of API", () => {
@@ -45,7 +44,7 @@ describe("Testing of API", () => {
                     done();
                 });
         });
-    });
+    }).timeout(5000);
 
     describe("GET API", () => {
         it("it should GET no contacts db", (done) => {
