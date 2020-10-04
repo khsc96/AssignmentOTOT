@@ -54,10 +54,12 @@ Followed through this [tutorial](https://medium.com/@dinyangetoh/how-to-build-si
 - mocha 
 - chai
 - fork repo & download locally this whole code
+- Make sure DB is empty.
 
 ### Steps to run test locally:
 
 1. Make sure B1 steps 1-3 are done.
+1. Make sure DB is empty, delete all existing contacts.
 1. Run `$npm run tests` on project root directory.
     
     i. Test should be all passing upon completion.
@@ -95,6 +97,10 @@ Travis tutorial and set-up:
 2. To add any contacts or perform POST/GET/UPDATE/DELETE API you should use PostMan and:
 
     i. Follow through B1 steps but replace all link of `http://localhost:8080/api/contact` to `https://ly2xlzpho6.execute-api.ap-southeast-1.amazonaws.com/dev/api/contacts`
+
+Note: 
+
+ * Remove all contacts after adding to allow test to pass.
 
 ## Acknowledgement - For B3
 
