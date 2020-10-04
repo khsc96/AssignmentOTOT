@@ -43,8 +43,8 @@ describe("Testing of API", () => {
                     contactsPosted = res.body.data;
                     done();
                 });
-        });
-    }).timeout(5000);
+        }).timeout(5000);
+    });
 
     describe("GET API", () => {
         it("it should GET no contacts db", (done) => {
@@ -103,7 +103,7 @@ describe("Testing of API", () => {
                 })
         })
 
-    });
+    }).timeout(5000);
     describe("DELTE API", () => {
         it('it should delete existing contact with id', (done) => {
             const contactID = contactsPosted._id;
@@ -119,4 +119,4 @@ describe("Testing of API", () => {
         })
 
     });
-}).timeout(10000);
+});
