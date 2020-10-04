@@ -20,12 +20,12 @@ let testContact = {
 // TODO test cases here
 describe("Testing of API", () => {
     let contactsPosted = {};
-    after((done) => {
-        // Before each test, empty database
-        contactModel.remove({}, (err) => {
-            done();
-        });
-    });
+    // after((done) => {
+    //     // Before each test, empty database
+    //     contactModel.remove({}, (err) => {
+    //         done();
+    //     });
+    // });
     describe("POST API", () => {
         it("it should POST a contact", (done) => {
             chai.request(app)
