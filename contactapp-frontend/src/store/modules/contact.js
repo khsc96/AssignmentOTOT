@@ -4,7 +4,7 @@ import 'babel-polyfill';
 export default {
     state: {
         contactDetails: {
-            id: "",
+            _id: "",
             name: "",
             email: "",
             gender: "",
@@ -46,7 +46,7 @@ export default {
             state.ContactDetails.apiError = msg;
         },
         setContactList(state, payload) {
-            state.contactList = payload
+            state.contactList = payload.data
         },
         setContactDetails(state, payload) {
             state.contactDetails = payload; 
@@ -83,7 +83,7 @@ export default {
         async getContactList({commit}) {
             commit("setContactListLoading", true);
             axios
-                .get("https://ly2xlzpho6.execute-api.ap-southeast-1.amazonaws.com/dev/api/contacts")
+                .get("/api/contacts")
                 .then((response) => {
                     commit("setContactList", response.data);
                 })
@@ -97,18 +97,15 @@ export default {
         async addContact({commit, state}) {
             commit("setContactListLoading", true);
             await axios
-                .post("http://localhost:8080/api/contacts", state.contactDetails)
+                .post("/api/contacts", state.contactDetails)
                 .then((response) => {
-                    commit("addToContactListdd", this.deepCopy(response));
-                    commit("setContactDetails", this.deepCopy(response));
+                    commit("addToContactList", JSON.parse(JSON.stringify(response.data.data)));
+                    commit("setContactDetails", JSON.parse(JSON.stringify(response.data.data)));
                     commit("setUploadsuccessful", true)
                 })
         }
     },
-    methods: {
-        deepCopy(obj) {
-           return JSON.parse(JSON.stringify(obj));
-        }
-    }
+    watch: {
 
+    }
 }

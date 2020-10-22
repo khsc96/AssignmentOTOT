@@ -1,13 +1,19 @@
 <template>
   <div class="home">
-    <!-- <ContactsCard/> -->
     <b-button id="addContactBtn" @click="showAddForm">Add Contact</b-button>
+    <b-container>
+      <b-row>
+        <b-col class="card-container" cols="4" v-for="contact in displayContactList" :key="contact._id">
+          <ContactsCard :contactDetails="contact"/>
+        </b-col>
+      </b-row>
+    </b-container>
     <b-modal ref="add-form" hide-footer title="Add Contact">
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group id="name-input-group" label="Name:" label-for="name-input">
           <b-form-input
             id="name-input"
-            v-model="newContactDetails.name"
+            v-model="contactDetailsName"
             type="name"
             required
             placeholder="Enter Name of Contact"
@@ -17,7 +23,7 @@
         <b-form-group id="phone-input-group" label="Phone:" label-for="phone-input">
           <b-form-input
             id="phone-input"
-            v-model="newContactDetails.phone"
+            v-model="contactDetailsPhone"
             required
             placeholder="Enter Phone Number"
           />
@@ -26,16 +32,16 @@
         <b-form-group id="email-input-group" label="Email:" label-for="email-input">
           <b-form-input
             id="email-input"
-            v-model="newContactDetails.email"
+            v-model="contactDetailsEmail"
             required
             placeholder="Enter Email Address"
           />
         </b-form-group>
 
-        <b-form-group id="gender-input-group" label="Email:" label-for="gender-input">
+        <b-form-group id="gender-input-group" label="Gender:" label-for="gender-input">
           <b-form-select
             id="gender-input"
-            v-model="newContactDetails.gender"
+            v-model="contactDetailsGender"
             :options="gender"
             required
           ></b-form-select>
@@ -49,22 +55,17 @@
 
 <script>
 // @ is an alias to /src
-// import ContactsCard from "../components/ContactsCard";
+import ContactsCard from "../components/ContactsCard";
 
 export default {
   name: "Home",
   components: {
-    // ContactsCard,
+    ContactsCard,
   },
   data() {
     return {
-      newContactDetails: {
-        name: "",
-        email: "",
-        gender: null,
-        phone: "",
-        created_date: "",
-      },
+      // TODO change all this to store.modules state
+      displayContactList: null,
       gender: [
         { value: null, text: 'Please select an option' },
         'Male',
@@ -73,44 +74,112 @@ export default {
       show: true,
     }
   },
+  beforeMount() {
+    this.$store.dispatch('getContactList')
+    this.displayContactList = this.$store.state.contact.contactList
+  },
   computed: {
-
+    contactDetailsName: {
+      get() {
+        return this.$store.state.contact.contactDetails.name
+      },
+      set(value) {
+        this.$store.commit('setContactDetailsAttribute', {
+          field: 'name',
+          value
+        })
+      }
+    },
+    contactDetailsEmail: {
+      get() {
+        return this.$store.state.contact.contactDetails.email
+      },
+      set(value) {
+        this.$store.commit('setContactDetailsAttribute', {
+          field: 'email',
+          value
+        })
+      }
+    },
+    contactDetailsPhone: {
+      get() {
+        return this.$store.state.contact.contactDetails.phone
+      },
+      set(value) {
+        this.$store.commit('setContactDetailsAttribute', {
+          field: 'phone',
+          value
+        })
+      }
+    },
+    contactDetailsGender: {
+      get() {
+        return this.$store.state.contact.contactDetails.gender
+      },
+      set(value) {
+        this.$store.commit('setContactDetailsAttribute', {
+          field: 'gender',
+          value
+        })
+      }
+    },
+    contactList: {
+      get() {
+        return this.$store.state.contact.contactList
+      },
+      set(value) {
+        this.$store.commit('setContactList', value)
+      }
+    }
+  },
+  watch: {
+    contactList (updated) {
+      this.displayContactList = updated;
+    }
   },
   methods: {
-      showAddForm() {
-        this.$refs['add-form'].show()
-      },
-      onSubmit(evt) {
-        evt.preventDefault()
-        // TODO Post request
-        this.newContactDetails.created_date = this.getCurrentDateTime()
-        this.$store.dispatch('addContact').then(() => {          
-          alert(JSON.stringify(this.newContactDetails))
-        })
+    showAddForm() {
+      this.$refs['add-form'].show()
+    },
+    onSubmit(evt) {
+      evt.preventDefault()
+      // TODO Post request
+      this.$store.commit('setContactDetailsAttribute', {
+        field: 'create_date',
+        value: this.getCurrentDateTime()
+      }) 
+      this.$store.dispatch('addContact').then(() => {          
+        alert("Contacts added!")
+      }).catch((e) => {
+        alert("Error: " + e.toString() + "\nContacts unable to be added, check connection!")
+      }).finally(() => {
+        this.$store.commit('clearContactDetails')
+      })
 
-      },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.newContactDetails.email = ''
-        this.newContactDetails.name = ''
-        this.newContactDetails.gender = null
-        this.newContactDetails.phone = ''
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      },
-      getCurrentDateTime() {
-        let currentDate = new Date();
-        return currentDate.getDate() + "/"
-            + (currentDate.getMonth() + 1) + "/"
-            + currentDate.getFullYear() + " @ "  
-            + currentDate.getHours() + ":"  
-            + currentDate.getMinutes() + ":" 
-            + currentDate.getSeconds() 
-      } 
+    },
+    onReset(evt) {
+      evt.preventDefault()
+      // Reset our form values
+      this.$store.commit('clearContactDetails')
+      // Trick to reset/clear native browser form validation state
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
+    },
+    getCurrentDateTime() {
+      let currentDate = new Date();
+      return currentDate.getDate() + "/"
+          + (currentDate.getMonth() + 1) + "/"
+          + currentDate.getFullYear() + " @ "  
+          + currentDate.getHours() + ":"  
+          + currentDate.getMinutes() + ":" 
+          + currentDate.getSeconds() 
+    } 
   }
 };
 </script>
+
+<style scoped>
+
+</style>
