@@ -103,6 +103,26 @@ export default {
                     commit("setContactDetails", JSON.parse(JSON.stringify(response.data.data)));
                     commit("setUploadsuccessful", true)
                 })
+                .catch((e) => {
+                    commit("setUploadsuccessful", false)
+                    commit("setContactDetailsApiError", e.toString())
+                })
+        },
+        async updateContact({commit, state}) {
+            commit("setContactListLoading", true)
+            console.log(state.contactDetails)
+            await axios
+                .put("/api/contacts/" + state.contactDetails._id, state.contactDetails)
+                .then((response) => {
+                    console.log(response.data)
+                    commit("updateContactList", response.data.data)
+                })
+                .catch((e) => {
+                    commit("setContactListApiError", e.toString())
+                })
+                .finally(() => {
+                    commit("setContactListLoading", false)
+                })
         }
     },
     watch: {

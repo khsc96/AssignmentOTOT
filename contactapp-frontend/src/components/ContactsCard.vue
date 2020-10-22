@@ -1,10 +1,10 @@
 <template>
     <div @click="showUpdateForm">
-        <b-card class="card-hover" v-b-hover="hoverColor" v-bind:style="color" :title="contactDetails.name" >
+        <b-card class="card-hover" v-b-hover="hoverColor" v-bind:style="color" :title="intialContactDetails.name" >
             <b-list-group flush>
-                <b-list-group-item v-bind:style="color">Phone: {{ contactDetails.phone }}</b-list-group-item>
-                <b-list-group-item v-bind:style="color">Email: {{ contactDetails.email }}</b-list-group-item>
-                <b-list-group-item v-bind:style="color">Gender: {{ contactDetails.gender }}</b-list-group-item>
+                <b-list-group-item v-bind:style="color">Phone: {{ intialContactDetails.phone }}</b-list-group-item>
+                <b-list-group-item v-bind:style="color">Email: {{ intialContactDetails.email }}</b-list-group-item>
+                <b-list-group-item v-bind:style="color">Gender: {{ intialContactDetails.gender }}</b-list-group-item>
             </b-list-group>
         </b-card>
     <b-modal ref='update-form' hide-footer title="Update Contact">
@@ -71,7 +71,11 @@ export default {
                 'Male',
                 'Female',
             ],
+            intialContactDetails: null,
         }
+    },
+    mounted() {
+      this.intialContactDetails = JSON.parse(JSON.stringify(this.contactDetails))
     },
     methods: {
         showUpdateForm() {
@@ -87,13 +91,22 @@ export default {
         onSubmitUpdate(evt) {
             evt.preventDefault()
             // TODO Update request
-
+            this.$store.commit('setContactDetails', this.contactDetails)
+            this.$store.dispatch('updateContact')
+              .then(() => {
+                if (this.$store.state.contact.contactListStatus.isApiError) {
+                  alert(this.$store.state.contact.contactListStatus.apiError)
+                } else {
+                  alert('Contact Successfully updated!')
+                }
+              })
         },
         onResetUpdate(evt) {
             evt.preventDefault()
             // TODO reset values
             // Reset our form values
             // Trick to reset/clear native browser form validation state
+            this.$store.commit('setContactDetails', this.intialContactDetails)
             this.show = false
             this.$nextTick(() => {
                 this.show = true
