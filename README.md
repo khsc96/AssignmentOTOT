@@ -60,7 +60,7 @@ Followed through this [tutorial](https://medium.com/@dinyangetoh/how-to-build-si
 
 1. Make sure B1 steps 1-3 are done.
 1. Make sure DB is empty, delete all existing contacts.
-1. Run `$npm run tests` on project root directory.
+1. Run `$npm run test` on project root directory.
     
     i. Test should be all passing upon completion.
 

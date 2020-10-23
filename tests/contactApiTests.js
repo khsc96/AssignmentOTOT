@@ -23,7 +23,6 @@ let testContact = {
 // TODO test cases here
 describe("Testing of API", () => {
     let contactsPosted = {};
-
     before((done) => {
         // Before test, empty database
         contactModel.remove({}, (err) => {
@@ -127,4 +126,4 @@ describe("Testing of API", () => {
         })
 
     });
-});
+}).timeout(10000);
