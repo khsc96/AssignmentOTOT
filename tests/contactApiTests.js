@@ -21,8 +21,9 @@ let testContact = {
 // Extend timeout time for travis
 
 // TODO test cases here
-describe("Testing of API", () => {
+describe("Testing of API", function() {
     let contactsPosted = {};
+    this.timeout(10000);
     before((done) => {
         // Before test, empty database
         contactModel.remove({}, (err) => {
@@ -126,4 +127,4 @@ describe("Testing of API", () => {
         })
 
     });
-}).timeout(10000);
+});
