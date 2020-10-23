@@ -116,3 +116,71 @@ Travis encryption/set-ups:
 MongoDB set-up:
 1. https://dev.to/adnanrahic/a-crash-course-on-serverless-apis-with-express-and-mongodb-193k
 1. https://medium.com/@sergio13prez/connecting-to-mongodb-atlas-d1381f184369
+
+
+## 4. How to run B4
+
+### Requirements:
+1. Download code onto your local machine.
+2. Npm and Nodejs
+3. Express
+4. MongoDB
+5. BootstrapVue.
+6. Axios.
+7. Basically everything needed from B1 - B3 in readme of github repo (except PostMan).
+
+### Steps to run B4 frontend code:
+
+#### Set-up for backend:
+1. At project root directory, run $npm install
+1. Check for mongoDB successfully installed by using $mongo --version
+1. Run $nodemon index at root project directory.
+
+#### Set-up for frontend:
+1. Open another terminal, cd to contactapp-frontend folder.
+1. Run npm run serve
+
+### General workflow for contact app:
+**To add:**
+1. Add contact button should be displayed on Home page, click it.
+1. Type in the required field: name, email, phone number and select gender.
+    - Name should be a minimum of length 3 and alphabets only
+    - Email should be a valid email.
+    - Phone number must be at least length of 7, max length of 15 according to international phone number length.
+    - Click dropdown to select Gender.
+1. Press ‘Submit’, alert will pop-up notifying post success, press ‘Ok’.
+1. Contact should be added.
+
+**NOTE: ‘Submit’ button is disabled until the fields are in valid format.**
+
+**To Update:**
+1. Click onto the card view of the contact you wish to update.
+1. An update form should show up.
+    - Update field accordingly
+    - Press ‘Submit’ once done, a pop-up should appear. Press ‘Ok’
+    - Contact should be updated.
+
+**NOTE: Form validation rules apply when updating as well.**
+
+**To delete:**
+1. Click on the ‘X’ button.
+    - Pop-up modal should appear asking for confirmation. Click accordingly.
+    - Upon clicking ‘Yes!’, an alert should appear. Press ‘Ok’ and contact should be deleted.
+
+### Acknowledgements for B4
+
+A quick fix to CORS issue faced when using axios.
+
+- https://medium.com/js-dojo/how-to-deal-with-cors-error-on-vue-cli-3-d78c024ce8d3
+
+Documents regarding Vue and Vuex, how to use it:
+- https://vuejs.org/v2/guide/instance.html
+- https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
+
+A brief introduction to developing Vue apps with BootstrapVue.
+- https://www.youtube.com/watch?v=-DyKeMa5tYY
+
+BootstrapVue & validating form:
+- https://bootstrap-vue.org/docs/reference/validation
+- https://vee-validate.logaretm.com/v2/guide/rules.html#excluded-params
+

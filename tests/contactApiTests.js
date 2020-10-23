@@ -5,6 +5,7 @@ let should = chai.should();
 
 let contactModel = require('../contactModel');
 const { update } = require('../contactModel');
+const { before } = require('mocha');
 
 // Configure chai
 chai.use(chaiHttp);
@@ -22,6 +23,13 @@ let testContact = {
 // TODO test cases here
 describe("Testing of API", () => {
     let contactsPosted = {};
+
+    before((done) => {
+        // Before test, empty database
+        contactModel.remove({}, (err) => {
+            done();
+        });
+    });
 
     describe("POST API", () => {
         it("it should POST a contact", (done) => {
