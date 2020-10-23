@@ -23,6 +23,8 @@ export default {
             apiError: "",
         },
         isUploadSuccessful: false,
+        isDeleteSuccessful: false,
+        deleteErrorMsg: "",
     },
     mutations: {
         setUploadsuccessful(state, payload) {
@@ -63,7 +65,7 @@ export default {
         },
         updateContactList(state, payload) {
             state.contactList = state.contactList.map((contact) => {
-                if (contact.id === payload.id) {
+                if (contact._id === payload._id) {
                     return payload
                 }
                 return contact
@@ -74,9 +76,15 @@ export default {
         },
         deleteFromContactList(state, payload) {
             const index = state.contactList.findIndex((contact) => {
-                contact.id === payload
+                return contact._id === payload._id
             })
             state.contactList.splice(index, 1)
+        },
+        deleteContactStatus(state, payload) {
+            state.isDeleteSuccessful = payload
+        },
+        deleteErrorMsg(state, payload) {
+            state.deleteErrorMsg = payload
         }
     },
     actions: {
@@ -108,13 +116,12 @@ export default {
                     commit("setContactDetailsApiError", e.toString())
                 })
         },
-        async updateContact({commit, state}) {
+        async updateContact({commit}, updatedContact) {
             commit("setContactListLoading", true)
-            console.log(state.contactDetails)
+            console.log(updatedContact)
             await axios
-                .put("/api/contacts/" + state.contactDetails._id, state.contactDetails)
+                .put("/api/contacts/" + updatedContact._id, updatedContact)
                 .then((response) => {
-                    console.log(response.data)
                     commit("updateContactList", response.data.data)
                 })
                 .catch((e) => {
@@ -123,6 +130,22 @@ export default {
                 .finally(() => {
                     commit("setContactListLoading", false)
                 })
+        },
+        async deleteContact({commit}, contactToBeDeleted) {
+            commit("setContactListLoading", true)
+            console.log(contactToBeDeleted)
+            await axios
+                .delete("/api/contacts/" + contactToBeDeleted._id, contactToBeDeleted)
+                    .then((response) => {
+                        console.log(response.data)
+                        commit("deleteFromContactList", contactToBeDeleted)
+                        commit("deleteContactStatus", true)
+                    })
+                    .catch((e) => {
+                        commit("deleteErrorMsg", e.toString())
+                        commit("deleteContactStatus", false)
+                    })
+
         }
     },
     watch: {

@@ -9,46 +9,61 @@
       </b-row>
     </b-container>
     <b-modal ref="add-form" hide-footer title="Add Contact">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="name-input-group" label="Name:" label-for="name-input">
-          <b-form-input
-            id="name-input"
-            v-model="contactDetailsName"
-            type="name"
-            required
-            placeholder="Enter Name of Contact"
-          />
-        </b-form-group>
+      <ValidationObserver v-slot="{ invalid }">
 
-        <b-form-group id="phone-input-group" label="Phone:" label-for="phone-input">
-          <b-form-input
-            id="phone-input"
-            v-model="contactDetailsPhone"
-            required
-            placeholder="Enter Phone Number"
-          />
-        </b-form-group>
+        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+          <b-form-group id="name-input-group" label="Name:" label-for="name-input">
+            <ValidationProvider name="Name" rules="required|alpha|min:3|max:100" v-slot="{ errors }">
+              <b-form-input
+                id="name-input"
+                v-model="contactDetailsName"
+                type="name"
+                required
+                placeholder="Enter Name of Contact"
+              />
+              <span class="error-msg">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-form-group>
 
-        <b-form-group id="email-input-group" label="Email:" label-for="email-input">
-          <b-form-input
-            id="email-input"
-            v-model="contactDetailsEmail"
-            required
-            placeholder="Enter Email Address"
-          />
-        </b-form-group>
+          <b-form-group id="phone-input-group" label="Phone:" label-for="phone-input">
+            <ValidationProvider name="Phone number" rules="required|numeric|min:7|max:15" v-slot="{ errors }">
+              <b-form-input
+                id="phone-input"
+                v-model="contactDetailsPhone"
+                required
+                placeholder="Enter Phone Number"
+              />
+              <span class="error-msg">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-form-group>
 
-        <b-form-group id="gender-input-group" label="Gender:" label-for="gender-input">
-          <b-form-select
-            id="gender-input"
-            v-model="contactDetailsGender"
-            :options="gender"
-            required
-          ></b-form-select>
-        </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
-      </b-form>
+          <b-form-group id="email-input-group" label="Email:" label-for="email-input">
+          <ValidationProvider name="Email" rules="required|email" v-slot="{ errors }">
+            <b-form-input
+              id="email-input"
+              v-model="contactDetailsEmail"
+              required
+              placeholder="Enter Email Address"
+            />
+            <span class="error-msg">{{ errors[0] }}</span>
+          </ValidationProvider>
+          </b-form-group>
+
+          <b-form-group id="gender-input-group" label="Gender:" label-for="gender-input">
+            <ValidationProvider Name="Gender" rules="required" v-slot="{ errors }">
+              <b-form-select
+                id="gender-input"
+                v-model="contactDetailsGender"
+                :options="gender"
+                required
+              ></b-form-select>
+              <span class="error-msg">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-form-group>
+          <b-button type="submit" variant="primary" :disabled="invalid">Submit</b-button>
+          <b-button type="reset" variant="danger">Reset</b-button>
+        </b-form>
+      </ValidationObserver>
     </b-modal>
   </div>
 </template>
@@ -150,6 +165,7 @@ export default {
       }) 
       this.$store.dispatch('addContact').then(() => {          
         alert("Contacts added!")
+        this.$refs['add-form'].hide()
       }).catch((e) => {
         alert("Error: " + e.toString() + "\nContacts unable to be added, check connection!")
       }).finally(() => {
@@ -181,5 +197,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .error-msg {
+    color: red;
+  }
 </style>
